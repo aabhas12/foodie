@@ -25,6 +25,31 @@ class Ingredients(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
 
+class MainIngredients(models.Model):
+    name = models.CharField(max_length=20)
+    icon = models.URLField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Main Ingredient'
+        verbose_name_plural = 'Main Ingredients'
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
+class IngredientsTranslations(models.Model):
+    ingredient = models.ForeignKey(MainIngredients, on_delete=models.CASCADE)
+    name = models.CharField(max_length=20, null=True, blank=True)
+    language_code = models.CharField(max_length=5, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Ingredients Translation'
+        verbose_name_plural = 'Ingredients Translations'
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
 class Instructions(models.Model):
     recipe = models.ForeignKey(Recipe, related_name='recipes_instructions', on_delete=models.CASCADE)
     step = models.CharField(max_length=300, blank=True, null=True)
