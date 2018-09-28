@@ -13,11 +13,13 @@ django.setup()
 
 from googletrans import Translator
 from recipe.models import MainIngredients, IngredientsTranslations
-
-
+from yandex import Translater
+tr = Translater()
+tr.set_key('trnsl.1.1.20180928T003716Z.0794b3c0330a2aa6.1d51eeb5dc291c2a59b55b0b2b317e610a60403c')
 translator = Translator()
-ingredients = ['onion', 'tomatoes', 'green chili', 'cottage cheese', 'Angelica', 'Basil', 'Basil - Thai', 'Bay', 'Borage', 'Coriander', 'cilantro', 'mint']
-language_codes = ['es', 'hi', 'pt', 'ur']
+tr.set_from_lang('en')
+ingredients = ['onion', 'tomatoes', 'green chili', 'cottage cheese', 'cilantro']
+language_codes = ['es', 'hi', 'pt']
 for ingredient in ingredients:
     for language_code in language_codes:
         if MainIngredients.objects.filter(name=ingredient).exists():
@@ -29,9 +31,12 @@ for ingredient in ingredients:
                                                       language_code=language_code).exists():
             IngredientsTranslations.objects.create(ingredient=main_ingredient, name=a.text, language_code=language_code)
         if a.pronunciation:
-            if not IngredientsTranslations.objects.filter(name=a.pronunciation, ingredient=main_ingredient,
-                                                          language_code=language_code).exists():
-                IngredientsTranslations.objects.create(ingredient=main_ingredient, name=a.pronunciation,
-                                                       language_code=language_code)
+            if not IngredientsTranslations.objects.filter(name=a.pronunciation, ingredient=main_ingredient).exists():
+                IngredientsTranslations.objects.create(ingredient=main_ingredient, name=a.pronunciation)
+        tr.set_to_lang(language_code)
+        tr.set_text(ingredient)
+        if not IngredientsTranslations.objects.filter(name=tr.translate(), ingredient=main_ingredient).exists():
+            IngredientsTranslations.objects.create(ingredient=main_ingredient, name=tr.translate())
 
 print('done')
+
