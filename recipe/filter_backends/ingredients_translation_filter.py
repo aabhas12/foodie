@@ -1,6 +1,5 @@
 from rest_framework.filters import BaseFilterBackend
 
-from recipe.models import MainIngredients
 
 
 class IngredientTranslationFilter(BaseFilterBackend):
@@ -10,8 +9,7 @@ class IngredientTranslationFilter(BaseFilterBackend):
             ingredient = request.GET.get('ing', None)
 
             if ingredient:
-                queryset = queryset.filter(name=ingredient)
-
+                queryset = queryset.filter(name__icontains=ingredient)
             return queryset
 
         except Exception as ex:
