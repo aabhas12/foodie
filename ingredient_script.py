@@ -7,8 +7,7 @@ your_djangoproject_home = os.path.split(BASE_DIR)[0]
 
 sys.path.append(your_djangoproject_home)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'foodie.settings'
-microsoftclientid = 'd0c45af0-c3d9-4d98-91de-80a5c6f18eeb'
-key = '6L6J5Lnlcy09VHMy6HGjL/3nwmE1MHlnlNBqzey3ux8='
+
 import django
 django.setup()
 
