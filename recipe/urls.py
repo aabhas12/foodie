@@ -15,10 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+
+from recipe.views import IngredientsViewSet
 from django.conf.urls import url, include
+
+router = routers.SimpleRouter()
+
+router.register(r'ingredient', IngredientsViewSet)
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    url(r'^recipe/', include('recipe.urls')),
+    url(r'', include(router.urls)),
 ]
