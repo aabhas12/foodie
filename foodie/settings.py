@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'user',
     'recipe',
+    'django.contrib.postgres'
 ]
 
 MIDDLEWARE = [
