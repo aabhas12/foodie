@@ -4,8 +4,8 @@ from django.shortcuts import render
 from rest_framework import viewsets
 
 from recipe.filter_backends.ingredients_translation_filter import IngredientTranslationFilter
-from recipe.models import IngredientsTranslations
-from user.serializers import IngredientsTranslationSerializer
+from recipe.models import IngredientsTranslations, Recipe
+from user.serializers import IngredientsTranslationSerializer, RecipeSerializer
 
 
 class IngredientsViewSet(viewsets.ModelViewSet):
@@ -14,3 +14,8 @@ class IngredientsViewSet(viewsets.ModelViewSet):
     serializer_class = IngredientsTranslationSerializer
     filter_backends = (IngredientTranslationFilter,)
 
+
+class RecipeViewSet(viewsets.ModelViewSet):
+
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer

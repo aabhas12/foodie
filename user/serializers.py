@@ -9,11 +9,19 @@ class InstructionsSerializer(serializers.ModelSerializer):
         fields = ('step', 'image')
 
 
+class MainIngredientSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = MainIngredients
+        fields = ('id', 'name', 'icon')
+
+
 class IngredientsSerializer(serializers.ModelSerializer):
+    main_ingredient = MainIngredientSerializer()
 
     class Meta:
         model = Ingredients
-        fields = ('quantity', 'ingredient')
+        fields = ('id', 'quantity', 'ingredient', 'main_ingredient')
 
 
 class RecipeImageSerializer(serializers.ModelSerializer):
@@ -21,13 +29,6 @@ class RecipeImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecipeImage
         fields = 'icon',
-
-
-class MainIngredientSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = MainIngredients
-        fields = ('id', 'name', 'icon')
 
 
 class IngredientsTranslationSerializer(serializers.ModelSerializer):
@@ -44,15 +45,16 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('user', 'title', 'time', 'servings', 'recipes_instructions', 'recipes_ingredients', 'video', 'description')
+        fields = ('id', 'user', 'title', 'description', 'time', 'servings', 'recipes_instructions',
+                  'recipes_ingredients', 'video')
 
     def create(self, validated_data):
         recipes_ingredients = validated_data.pop('recipes_ingredients')
-        recipes_instructons = validated_data.pop('recipes_instructions')
+        recipes_instructions = validated_data.pop('recipes_instructions')
         recipe1 = Recipe.objects.create(**validated_data)
         for recipe2 in recipes_ingredients:
             Ingredients.objects.create(recipe=recipe1, **recipe2)
-        for recipe3 in recipes_instructons:
+        for recipe3 in recipes_instructions:
             Instructions.objects.create(recipe=recipe1, **recipe3)
         return recipe1
 

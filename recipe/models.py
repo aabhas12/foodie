@@ -17,14 +17,6 @@ class Recipe(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
 
-class Ingredients(models.Model):
-    recipe = models.ForeignKey(Recipe, related_name='recipes_ingredients', on_delete=models.CASCADE)
-    ingredient = models.CharField(max_length=75, blank=True, null=True)
-    quantity = models.DecimalField(max_digits=5, decimal_places=4)
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-
-
 class MainIngredients(models.Model):
     name = models.CharField(max_length=20)
     icon = models.URLField(null=True, blank=True)
@@ -35,6 +27,15 @@ class MainIngredients(models.Model):
 
     def __str__(self):
         return "{}".format(self.name)
+
+
+class Ingredients(models.Model):
+    recipe = models.ForeignKey(Recipe, related_name='recipes_ingredients', on_delete=models.CASCADE)
+    ingredient = models.CharField(max_length=75, blank=True, null=True)
+    main_ingredient = models.ForeignKey(MainIngredients, null=True, blank=True, on_delete=models.DO_NOTHING)
+    quantity = models.DecimalField(max_digits=5, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
 
 class IngredientsTranslations(models.Model):
