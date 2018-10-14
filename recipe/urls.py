@@ -17,12 +17,14 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework import routers
 
-from recipe.views import IngredientsViewSet, RecipeViewSet
+from recipe.views import IngredientsViewSet, RecipeViewSet, RecipeTypeViewSet, CuisineTypeViewSet
 from django.conf.urls import url, include
 
 router = routers.SimpleRouter()
 
 router.register(r'search_ingredient', IngredientsViewSet)
+router.register(r'search_recipe_type', RecipeTypeViewSet)
+router.register(r'search_cuisine_type', CuisineTypeViewSet)
 router.register(r'store_recipe', RecipeViewSet)
 
 urlpatterns = [

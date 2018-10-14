@@ -40,3 +40,16 @@ class IngredientTranslationFilter(BaseFilterBackend):
 
         except Exception as ex:
             print(ex)
+
+
+class NameFilter(BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+        try:
+            type = request.GET.get('type', None)
+            if type:
+                return queryset.filter(name__icontains=type)
+            else:
+                return queryset
+        except Exception as ex:
+            print(ex)

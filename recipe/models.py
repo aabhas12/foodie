@@ -4,8 +4,35 @@ from django.db import models
 from user.models import Users
 
 
+class RecipeType(models.Model):
+    name = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        ordering = ['name']
+        unique_together = ['name']
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
+class CuisineType(models.Model):
+    name = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        ordering = ['name']
+        unique_together = ['name']
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+    # a = ['Italian', 'Mexican', 'Chinese', 'Indian', 'Japanese', 'Greek', 'Spanish', 'French', 'Thai', 'Vietnamese',
+    #      'Lebanese', 'Vegan', 'Cuban', 'Mongolian']
+
+
 class Recipe(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    recipe_type = models.ManyToManyField(RecipeType, null=True, blank=True)
+    cuisine_type = models.ForeignKey(CuisineType, on_delete=models.DO_NOTHING, null=True, blank=True)
     title = models.CharField(max_length=250)
     description = models.CharField(max_length=250, null=True, blank=True)
     time = models.FloatField()

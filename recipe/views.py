@@ -1,10 +1,10 @@
 # Create your views here.
 from rest_framework import viewsets
 
-from recipe.filter_backends.ingredients_translation_filter import IngredientTranslationFilter
-from recipe.models import IngredientsTranslations, Recipe
+from recipe.filter_backends.recipe_filter import IngredientTranslationFilter, NameFilter
+from recipe.models import IngredientsTranslations, Recipe, RecipeType, CuisineType
 from recipe.serializers import IngredientsTranslationSerializer, RecipeSerializer, RecipeRetrieveSerializer, \
-    RecipeListSerializer
+    RecipeListSerializer, RecipeTypeSerializer, CuisineTypeSerializer
 
 
 class IngredientsViewSet(viewsets.ModelViewSet):
@@ -12,6 +12,20 @@ class IngredientsViewSet(viewsets.ModelViewSet):
     queryset = IngredientsTranslations.objects.all()
     serializer_class = IngredientsTranslationSerializer
     filter_backends = (IngredientTranslationFilter,)
+
+
+class RecipeTypeViewSet(viewsets.ModelViewSet):
+
+    queryset = RecipeType.objects.all()
+    serializer_class = RecipeTypeSerializer
+    filter_backends = (NameFilter,)
+
+
+class CuisineTypeViewSet(viewsets.ModelViewSet):
+
+    queryset = CuisineType.objects.all()
+    serializer_class = CuisineTypeSerializer
+    filter_backends = (NameFilter,)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

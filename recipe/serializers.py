@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from recipe.models import Recipe, Instructions, Ingredients, RecipeImage, IngredientsTranslations, MainIngredients
+from recipe.models import Recipe, Instructions, Ingredients, RecipeImage, IngredientsTranslations, MainIngredients, \
+    RecipeType, CuisineType
 from user.serializers import UserListSerializer
 
 
@@ -45,6 +46,20 @@ class IngredientsTranslationSerializer(serializers.ModelSerializer):
     class Meta:
         model = IngredientsTranslations
         fields = ('id', 'name', 'ingredient')
+
+
+class RecipeTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = RecipeType
+        fields = ('id', 'name')
+
+
+class CuisineTypeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CuisineType
+        fields = ('id', 'name')
 
 
 class RecipeSerializer(serializers.ModelSerializer):
