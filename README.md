@@ -57,5 +57,5 @@ You will see success message with URL its working on.
 
 ## API Documentation
 All the API endpoints and payload information, response formats can be found after running the server on 
-https://localhost:8000/redoc<br />
+http://localhost:8000/redoc<br />
 Used the library drf-yasg for this
