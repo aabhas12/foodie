@@ -1,15 +1,15 @@
-from django.shortcuts import render
+from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
 
-# Create your views here.
-from rest_framework import status, mixins, generics
-from rest_framework.response import Response
-
-from recipe.models import Recipe
+from user.models import Users
+from user.serializers import UsersSerializer, UsersDetailSerializer
 
 
-class Recipe(mixins.CreateModelMixin, generics.GenericAPIView):
+class UserViewSet(viewsets.ModelViewSet):
 
-    queryset = Recipe.objects.all()
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+    serializer_class = UsersSerializer
+    retrieve_serializer_class = UsersDetailSerializer
+    list_serializer_class = UsersDetailSerializer
+    filter_backends = None
+    queryset = Users.objects.all()
+    permission_classes = [AllowAny]

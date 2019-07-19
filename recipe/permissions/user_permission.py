@@ -1,0 +1,13 @@
+from rest_framework import permissions
+
+
+class IsUser(permissions.BasePermission):
+    """
+    Custom permission to allow users to interact with an endpoint
+    """
+    def has_permission(self, request, view):
+        if request.method in ['POST', 'PATCH', 'PUT']:
+            if request.user.is_anonymous:
+                return False
+            return True
+        return True
